@@ -1,0 +1,189 @@
+<style>
+
+    body {
+        background-color: #1f2029;
+    }
+
+    div {
+        display: flex;
+        align-items: center;
+        justify-content:center;
+        border-radius: 50px;
+    }
+    input {
+        display: block;
+        align-content: center;
+        box-sizing: border-box;
+        margin-bottom: 20px;
+        line-height: 50px;
+        font-size: 30px;
+        width: 100%;
+        border-radius: 20px;
+
+    }
+
+    input[type="text"], input[type="number"], input[type="url"] {
+        color: wheat;
+        background-color: #353746;
+        border-color: wheat;
+        text-align: center;
+    }
+
+    label {
+        color: #ececee;
+        font-family: 'Poppins', sans-serif;
+        font-size: 30px;
+    }
+
+    form {
+        background-color: #171821;
+        text-align: center;
+        width: 50%;
+        height: 50%;
+        border-radius: 50px;
+    }
+
+    div.stampImage {
+        background-color: #1f2029;
+        left: 0;
+        width: 50%;
+        height: 100%;
+        background-image: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/1462889/pat-back.svg');
+        background-position: center;
+        background-repeat: repeat;
+        background-size: 4%;
+    }
+
+    div.setting {
+        background-color: #171821;
+        position: absolute;
+        right: 0;
+        top: 0;
+        width: 50%;
+        height: 100%;
+        text-shadow: 1px 1px 2px black, 0 0 1em navajowhite;
+    }
+
+    img {
+        position: sticky;
+        width: 50%;
+        height: 50%;
+    }
+
+    img:before {
+        content: " ";
+        display: block;
+
+        position: absolute;
+        top: -10px;
+        left: 0;
+        height: calc(100% + 10px);
+        width: 100%;
+        background-color: #1f2029;
+        border: 3px dotted rgb(100, 100, 100);
+        border-radius: 5px;
+    }
+
+    img:after {
+        content: "Упс.. Кажется, Ваша картинка не загружается...";
+        font-family: 'Poppins', sans-serif;
+        font-size: 32px;
+
+        color: #A5A5A5;
+        text-shadow: 0 0 1em navajowhite;
+        display: block;
+
+        position: absolute;
+        top: 30%;
+        width: 100%;
+
+        text-align: center;
+    }
+
+    .logo {
+        position: fixed;
+        top: 25px;
+        left: 25px;
+        display: block;
+        z-index: 1000;
+        transition: all 250ms linear;
+    }
+    .logo img {
+        height: 100px;
+        width: 100px;
+        display: block;
+        transition: filter 250ms 700ms linear;
+    }
+
+</style>
+
+<head>
+
+    <title>Редактирование марки</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.3/angular.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script>
+        angular.module('stamps', [])
+            .controller('stampController', function($scope, $http) {
+                $scope.id = location.pathname.split("/")[2];
+                $http.post('http://localhost:8080/rest/stamps/' + $scope.id).then(function (response) {
+                    st = response.data;
+                    $scope.inp_name = st.stampName;
+                    $scope.inp_year = st.stampYear;
+                    $scope.inp_price = st.price;
+                    $scope.urlImage = st.image;
+                });
+
+                $scope.delete = function (id) {
+                    $http.delete("http://localhost:8080/rest/delete/" + id);
+                    alert("Марка успешно удалена!");
+                    location.href = "../stamps";
+                }
+
+                $scope.edit = function (mode_t, id_t, name_t, year_t, price_t, image_t) {
+                    $.ajax({
+                        url: '/rest/edit',
+                        method: 'post',
+                        dataType: 'html',
+                        data: {mode: mode_t, id: id_t, name: name_t,
+                        year: year_t, price: price_t, image: image_t},
+                        success: function (text) {
+                            alert(text);
+                            location.href = "../stamps";
+                        }
+                    })
+                }
+            });
+    </script>
+</head>
+
+<html ng-app="stamps">
+    <head>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.3/angular.min.js"></script>
+        <meta charset="utf-8">
+        <title>Название марки</title>
+    </head>
+    <body ng-controller="stampController">
+        <div class="stampImage">
+            <img src={{urlImage}} alt="NO IMAGE" />
+        </div>
+        <div class="setting">
+            <form>
+                <label>Название</label>
+                <input type="text" ng-model="inp_name" required>
+                <label>Год выпуска</label>
+                <input type="number" ng-model="inp_year" required>
+                <label>Стоимость</label>
+                <input type="number" ng-model="inp_price" required>
+                <label>URL изображения</label>
+                <input type="text" ng-model="urlImage" required value={{urlImage}}>
+                <input type="submit" ng-click="edit(0, id, inp_name, inp_year, inp_price, urlImage)" value="Сохранить изменения">
+                <input type="button" ng-click="edit(1, id, inp_name, inp_year, inp_price, urlImage)" value="Создать новую">
+                <input type="button" ng-click="delete(id)" value="Удалить марку">
+            </form>
+        </div>
+        <a href="../stamps" class="logo">
+            <img src="https://athletikprofil.fussballmedizin.at/images/back_white.png" alt="">
+        </a>
+    </body>
+</html>
