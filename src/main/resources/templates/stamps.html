@@ -185,27 +185,25 @@
 </head>
 
 <body>
-<div class="section-fluid-main" ng-controller="stampController">
-    <div class="section-row" ng-repeat="st in stampsList" ng-show="stampsList.length">
+<div class="section-fluid-main">
+    <div class="section-row" th:each="st : ${stampsList}">
         <div class="section-col">
-            <a style="display:block" href="{{'stamps/'+st.id}}">
+            <a style="display:block" th:href="@{'stamps/' + ${st.id}}">
             <div class="section">
                 <div class="section-in">
-                    <img src={{st.image}} alt="">
+                    <img th:src="${st.image}" alt="">
                 </div>
             </div>
             </a>
         </div>
         <div class="hover-text">
-            <h2>{{st.stampName}}</h2>
+            <h2 th:text="${st.stampName}"></h2>
         </div>
     </div>
 
     <a href="../" class="logo">
         <img src="https://athletikprofil.fussballmedizin.at/images/back_white.png" alt="">
     </a>
-
-    <h1 class="mb-0" ng-show="stampsList.length == 0" th:text="#{stamps.nostamps}">THERE IS NO STAMPS</h1>
 </div>
 
 </body>
