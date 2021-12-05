@@ -157,11 +157,11 @@
     </script>
 </head>
 
-<html ng-app="stamps">
+<html xmlns:th="http://www.thymeleaf.org" ng-app="stamps">
     <head>
         <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.3/angular.min.js"></script>
         <meta charset="utf-8">
-        <title>Название марки</title>
+        <title th:text="#{one.title}">Stamp edit</title>
     </head>
     <body ng-controller="stampController">
         <div class="stampImage">
@@ -169,17 +169,16 @@
         </div>
         <div class="setting">
             <form>
-                <label>Название</label>
+                <label th:text="#{one.name}">Название</label>
                 <input type="text" ng-model="inp_name" required>
-                <label>Год выпуска</label>
-                <input type="number" ng-model="inp_year" required>
-                <label>Стоимость</label>
+                <label th:text="#{one.year}">Год выпуска</label>
+                <label th:text="#{one.price}">Стоимость</label>
                 <input type="number" ng-model="inp_price" required>
-                <label>URL изображения</label>
+                <label th:text="#{one.url}">URL изображения</label>
                 <input type="text" ng-model="urlImage" required value={{urlImage}}>
-                <input type="submit" ng-click="edit(0, id, inp_name, inp_year, inp_price, urlImage)" value="Сохранить изменения">
-                <input type="button" ng-click="edit(1, id, inp_name, inp_year, inp_price, urlImage)" value="Создать новую">
-                <input type="button" ng-click="delete(id)" value="Удалить марку">
+                <input type="submit" ng-click="edit(0, id, inp_name, inp_year, inp_price, urlImage)" th:value="#{one.save}" value="Сохранить изменения">
+                <input type="button" ng-click="edit(1, id, inp_name, inp_year, inp_price, urlImage)" th:value="#{one.create}" value="Создать новую">
+                <input type="button" ng-click="delete(id)" th:value="#{one.delete}" value="Удалить марку">
             </form>
         </div>
         <a href="../stamps" class="logo">

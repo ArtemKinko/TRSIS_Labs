@@ -303,7 +303,7 @@
       xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <head>
-    <title>HOME PAGE</title>
+    <title th:text="#{index.title}">Locale title</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </head>
 
@@ -313,18 +313,18 @@
 <nav class="nav">
     <ul class="pt-5">
         <div sec:authorize="isAnonymous()">
-            <li><a href="/login">Log in</a></li>
+            <li><a href="/login" th:text="#{index.login}">Log in</a></li>
         </div>
         <div sec:authorize="isAuthenticated()">
-            <li><a href="stamps">See all stamps</a></li>
+            <li><a href="stamps" th:text="#{index.see}">See all stamps</a></li>
         </div>
         <div sec:authorize="isAuthenticated()">
-            <li><a href="/logout">Log out</a></li>
+            <li><a href="/logout" th:text="#{index.logout}">Log out</a></li>
         </div>
     </ul>
 </nav>
 
 <div class="section-center">
-    <h1 class="mb-0">STAMPS HOME</h1>
+    <h1 class="mb-0" th:text="#{index.main_text}">STAMPS HOME</h1>
 </div>
 </body>

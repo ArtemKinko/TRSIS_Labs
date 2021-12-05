@@ -1,4 +1,4 @@
-<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
 
 
 <style>
@@ -171,7 +171,7 @@
 
 <html ng-app="stamps">
 <head>
-    <title>Список марок</title>
+    <title th:text="#{stamps.title}">Title</title>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.3/angular.min.js"></script>
     <script>
         angular.module('stamps', [])
@@ -205,7 +205,7 @@
         <img src="https://athletikprofil.fussballmedizin.at/images/back_white.png" alt="">
     </a>
 
-    <h1 class="mb-0" ng-show="stampsList.length == 0">THERE IS NO STAMPS</h1>
+    <h1 class="mb-0" ng-show="stampsList.length == 0" th:text="#{stamps.nostamps}">THERE IS NO STAMPS</h1>
 </div>
 
 </body>

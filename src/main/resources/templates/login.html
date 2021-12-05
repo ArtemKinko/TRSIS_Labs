@@ -1,7 +1,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 <head>
-    <title>Авторизация</title>
+    <title th:text="#{login.title}">Authorization</title>
     <style>
         body {
             margin: 0;
@@ -92,12 +92,12 @@
 <body>
 
     <form class="form" id="mainForm" th:action="@{/login}" method="post">
-        <h1 th:if="${param.error}">Failed to log in</h1>
-        <h1 th:if="${param.logout}">logged out success</h1>
-        <h1 th:if="${param.isEmpty()}">Log in</h1>
-        <input class="in" id="inputName" type="text" required name="name" placeholder="username"/>
-        <input class="in" id="inputPass" type="password" required name="pass" placeholder="password"/>
-        <input type="submit" id="submitBtn" value="ENTER"/>
+        <h1 th:if="${param.error}" th:text="#{login.failed}">Failed to log in</h1>
+        <h1 th:if="${param.logout}" th:text="#{login.logout}">logged out success</h1>
+        <h1 th:if="${param.isEmpty()}" th:text="#{login.login}">Log in</h1>
+        <input class="in" id="inputName" type="text" required name = "name" th:placeholder="#{login.name}"/>
+        <input class="in" id="inputPass" type="password" required name="pass" th:placeholder="#{login.pass}"/>
+        <input type="submit" id="submitBtn" th:value="#{login.enter}" value="ENTER"/>
 
     </form>
 
