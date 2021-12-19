@@ -65,4 +65,15 @@ public class Stamp implements Serializable {
 
     @Column(name = "image")
     private String image;
+
+    @Override
+    public String toString() {
+        return "Stamp{" +
+                "stampId=" + stampId +
+                ", stampName='" + stampName + '\'' +
+                ", stampYear=" + stampYear +
+                ", price=" + price +
+                ", image='" + image + '\'' +
+                '}';
+    }
 }

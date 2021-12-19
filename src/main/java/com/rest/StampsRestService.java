@@ -1,6 +1,7 @@
 package com.rest;
 
 import com.model.Stamp;
+import com.service.ProducerService;
 import com.service.StampsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -12,6 +13,9 @@ public class StampsRestService {
 
     @Autowired
     private StampsService stampsService;
+
+    @Autowired
+    private ProducerService producerService;
 
     @RequestMapping(value = "/stamps", method = RequestMethod.POST)
     public ResponseEntity<Object> see_all() {
@@ -38,7 +42,9 @@ public class StampsRestService {
                        @RequestParam("image") String image)
     {
         if (mode) {
-            ResponseEntity.ok(stampsService.add(new Stamp(name, year, price, image)));
+            Stamp new_stamp = new Stamp(name, year, price, image);
+            producerService.produce(new_stamp);
+            // ResponseEntity.ok(stampsService.add(new_stamp));
             String str = "Марка успешно добавлена";
             return "SUCCESSFULLY ADDED!";
         }
