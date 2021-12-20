@@ -1,13 +1,5 @@
-# syntax=docker/dockerfile:1
-
-FROM openjdk:16-alpine3.13
-
-WORKDIR /app
-
-COPY .mvn/ .mvn
-COPY mvnw pom.xml ./
-RUN ./mvnw dependency:go-offline
-
-COPY src ./src
-
-CMD ["./mvnw", "spring-boot:run"]
+FROM adoptopenjdk/openjdk16:alpine-jre
+ARG JAR_FILE=target/Lab_2.jar
+WORKDIR /opt/app  
+COPY ${JAR_FILE} app.jar  
+ENTRYPOINT ["java","-jar","app.jar"]  
